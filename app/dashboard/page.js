@@ -10,6 +10,7 @@ const Dashboard = () => {
   const [selectedRepo, setSelectedRepo] = useState("");
   const [projectKey, setProjectKey] = useState("");
   const [organization, setOrganization] = useState("");
+  const [apiToken, setApiToken] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -34,6 +35,7 @@ const Dashboard = () => {
         repoId: selectedRepo,
         projectKey,
         organization,
+        apiToken,
       });
       alert("SonarCloud linked successfully!");
     } catch (error) {
@@ -78,6 +80,14 @@ const Dashboard = () => {
                   type="text"
                   value={organization}
                   onChange={(e) => setOrganization(e.target.value)}
+                  required
+                />
+
+                <label>SonarCloud Api Token:</label>
+                <input
+                  type="text"
+                  value={apiToken}
+                  onChange={(e) => setApiToken(e.target.value)}
                   required
                 />
 

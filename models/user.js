@@ -8,12 +8,8 @@ const UserSchema = new mongoose.Schema(
     avatarUrl: { type: String },
     accessToken: { type: String, select: false }, // Don't return in queries
     installations: [{ type: String, unique: true }], // Multiple installations per user
-    // repos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Repo" }], // Relationship with Repo
   },
   { timestamps: true }
 );
-
-// const User = mongoose.model("User", UserSchema);
-// export default User;
 
 export const User = mongoose.models.User || mongoose.model("User", UserSchema);

@@ -14,7 +14,7 @@ export async function POST(req) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { repoId, projectKey, organization } = await req.json();
+    const { repoId, projectKey, organization, apiToken } = await req.json();
 
     // Check if repo exists and belongs to the user
     const repo = await Repo.findOne({ repoId, user: session.user.githubId });
@@ -25,7 +25,7 @@ export async function POST(req) {
     // Create or update SonarProject
     const sonarProject = await SonarProject.findOneAndUpdate(
       { repo: repo._id },
-      { projectKey, organization },
+      { projectKey, organization, apiToken },
       { upsert: true, new: true }
     );
 

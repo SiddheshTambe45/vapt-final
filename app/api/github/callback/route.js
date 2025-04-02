@@ -26,6 +26,8 @@ const generateAppJWT = () => {
 const getInstallationToken = async (installationId) => {
   const jwt = generateAppJWT();
 
+  console.log(jwt, "\n", installationId);
+
   const response = await axios.post(
     `https://api.github.com/app/installations/${installationId}/access_tokens`,
     {},
