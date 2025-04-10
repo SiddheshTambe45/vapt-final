@@ -4,7 +4,6 @@ import { Repo } from "@/models/repo";
 import { SonarProject } from "@/models/sonarProject";
 import mongoose from "mongoose";
 import { triggerDockerAppSetup } from "@/lib/docker/dockerAppSetup"; // Import the function to trigger Docker setup
-// import { triggerKoyebDeployment } from "@/lib/koyeb/deployToKoyeb"; // Import the function to trigger Koyeb deployment
 
 async function ensureDatabaseConnection() {
   if (mongoose.connection.readyState !== 1) {
