@@ -1,38 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# VAPT Automation Pipeline
 
-## Getting Started
+This guide walks you through the steps to set up and run the VAPT (Vulnerability Assessment and Penetration Testing) automation pipeline for the security testing of a Next.js application. The pipeline integrates SAST (Static Application Security Testing) and DAST (Dynamic Application Security Testing), leveraging SonarQube, OWASP ZAP, and Docker for containerized execution.
 
-First, run the development server:
+## Steps to Run the Pipeline
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Run the Next.js project locally using the following command:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+   ```bash
+   npm run dev
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. To expose your local development server to the internet, start an Ngrok tunnel:
 
-## Learn More
+   ngrok http 3000 --domain=infinite-overly-bug.ngrok-free.app
 
-To learn more about Next.js, take a look at the following resources:
+   This will provide a public URL for your locally running Next.js app.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Push a new change to your GitHub repository to trigger the pipeline. This could be a commit, pull request, or any change depending on your GitHub webhook configuration.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4. Upon pushing changes, the pipeline will automatically start.
 
-## Deploy on Vercel
+5. Open PowerShell to monitor the logs. Type the following command to see the logs of the application container:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   docker logs -f vuln-tang-clan-3
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+6. When the Next.js app successfully runs in the container, the focus will shift to the OWASP ZAP container. A small command prompt window will open, display a SHA hash (you can safely ignore it), and then close.
 
-ngrok http 3000 --domain=infinite-overly-bug.ngrok-free.app
+7. Switch to another PowerShell tab and monitor the OWASP ZAP container logs using the following command:
+
+   docker logs -f owasp-zap-container-1
+
+8. Wait for OWASP ZAP to complete the scan. The pipeline will automatically generate security results based on the detected vulnerabilities.
+
+9. Once the ZAP scan is finished, you can stop the running Docker containers using the following command:
+
+   docker stop container_name
+
+   Replace container_name with the actual name of the container you want to stop (e.g., vuln-tang-clan-3 or owasp-zap-container-1).
