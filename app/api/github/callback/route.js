@@ -116,7 +116,7 @@ export async function GET(req) {
     return new NextResponse(null, {
       status: 302,
       headers: {
-        Location: "/dashboard",
+        Location: "/configure",
       },
     });
   } catch (error) {
